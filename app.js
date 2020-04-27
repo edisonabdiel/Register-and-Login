@@ -1,6 +1,7 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 
 const app = express();
@@ -9,13 +10,22 @@ const app = express();
 const db = require('./config/keys').MongoURI;
 
 //Mongo connection
-mongoose.connect(db, { useNewUrlParser: true , useUnifiedTopology: true , useCreateIndex: true , useFindAndModify: false})
-    .then(() => console.log('Mongo DB Connected'))
+mongoose.connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+})
+    .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log('Error', err));
 
 //EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
+
+//Bodyparser
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 //Routes
