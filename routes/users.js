@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
             .then(user => {
                 if (user) {
                 //User exists already
-                    errors.push({ msg: "email is already registered"})
+                    errors.push({ msg: "this email is already registered"})
                     res.render('register', {
                         errors,
                         name,
@@ -58,15 +58,16 @@ router.post('/register', (req, res) => {
                         password
                     });
                      //Hash the passwords
-                    bcrypt.getSalt(10, (err, salt) =>
-                        bcrypt.hash(newUser.password, salt, () => {
+                     bcrypt.genSalt(10, (err, salt) =>
+                     bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) throw err;
                             //Set password to hash
-                            newUser.passwrod = hash;
+                            newUser.password = hash;
                             //Save the new user
                             newUser.save()
                                 .then(user => {
-                                    res.redirect("/login")
+                                    req.flash('success_msg', 'You are now register and can login');
+                                    res.redirect("/users/login");
                                 })
                             .catch(err => console.log(err))
                         }));
