@@ -31,8 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
     secret: 'caesar',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    saveUninitialized: true
 }));
 
 //Connect flash
