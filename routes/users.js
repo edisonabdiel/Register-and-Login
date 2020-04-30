@@ -43,7 +43,7 @@ router.post('/register', (req, res) => {
             .then(user => {
                 if (user) {
                 //User exists already
-                    errors.push({ msg: "this email is already registered"})
+                    errors.push({ msg: "This email is already registered"})
                     res.render('register', {
                         errors,
                         name,
